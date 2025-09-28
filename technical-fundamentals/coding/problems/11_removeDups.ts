@@ -12,4 +12,23 @@ export type Node<T> = {
   next?: Node<T>;
 };
 
-export default function removeDups<T>(head?: Node<T>): Node<T> | undefined {}
+/**
+ * Approach 1: Manually checking comparing the current with next, if they are the same, current.next = next.next
+ * Approach 2: Filter fn
+ * Approach 3: Have a current and prev and compare prev with current and then prev.next = current.next (similar to 1)
+ */
+export default function removeDups<T>(head?: Node<T>): Node<T> | undefined {
+  const list: LinkedList<T> = new LinkedList<T>(head)
+
+  const duplicates = new Set<T>()
+  
+  const filteredList = list.filter(value => {
+    if(duplicates.has(value)) {
+      return false
+    }
+    duplicates.add(value)
+    return true
+  })
+
+  return filteredList.head
+}
